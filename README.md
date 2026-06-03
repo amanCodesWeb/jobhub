@@ -1,59 +1,208 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ListingHub
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern job listing platform built with **Laravel 12**, **Tailwind CSS 4**, and **Vite**. Features a public job board, user dashboard, full admin panel, and a REST API with Laravel Sanctum authentication.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Public
+- **Job Board** — Browse all listings with pagination, category info, and company details
+- **Job Detail** — Full description, salary, poster info, category
+- **About & Contact** — Static informational pages
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### User Features
+- **Registration & Login** — Standard email/password authentication
+- **Social Login** — Sign in with Google or GitHub (via Laravel Socialite)
+- **User Dashboard** (`/my`) — Personal area with listings overview and stats
+- **Job Management** — Create, edit, and delete your own job listings
+- **Company Name** — Optionally attach a company name (falls back to your full name)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Admin Panel (`/admin`)
+Login via the separate portal at `/admin.php`.
 
-## Learning Laravel
+- **Dashboard** — Stat cards showing total jobs, users, and admins
+- **Job Management** — View all listings in a table, edit, and delete with inline dropdown actions
+- **User Management** — Tabbed view (Regular Users / Admins), edit profiles, reset passwords, delete users
+- **Category Management** — Full CRUD for job categories (Web Dev, Data Science, DevOps, etc.)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### REST API
+Powered by Laravel Sanctum (Bearer token auth).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/register` | POST | Register a new user |
+| `/api/login` | POST | Login & get token |
+| `/api/logout` | POST | Revoke token (auth) |
+| `/api/user` | GET | Current user (auth) |
+| `/api/jobs` | GET | List all jobs |
+| `/api/jobs/{id}` | GET | Single job detail |
+| `/api/jobs` | POST | Create a job (auth) |
+| `/api/jobs/{id}` | PATCH | Update a job (auth) |
+| `/api/jobs/{id}` | DELETE | Delete a job (auth) |
+| `/api/categories` | GET | List categories |
+| `/api/categories/{id}` | GET | Single category |
+| `/api/my/stats` | GET | User dashboard stats (auth) |
+| `/api/my/jobs` | GET | User's own jobs (auth) |
 
-## Laravel Sponsors
+API documentation is available at `/docs/api`.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Design
+- **Dark mode** throughout — all views support dark/light toggling with a theme switcher in the admin header
+- **Teal accent** (teal-600) — consistent color scheme across buttons, badges, borders, and hover states
+- **Responsive** — works on mobile, tablet, and desktop
+- **Tailwind-styled pagination** — custom Tailwind pagination view
 
-### Premium Partners
+## Tech Stack
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- **Backend:** Laravel 12, PHP 8.2+
+- **Frontend:** Tailwind CSS 4, Vite, Alpine-style JS
+- **Database:** MySQL (configurable via `.env`)
+- **Auth:** Laravel Auth + Sanctum (API tokens) + Socialite (Google/GitHub)
+- **Build:** Vite + `@tailwindcss/vite` plugin + `laravel-vite-plugin`
 
-## Contributing
+## Requirements
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- PHP 8.2+
+- Composer 2.x
+- Node.js 20+ / npm
+- MySQL 8.0+ (or compatible database)
+- A queue driver (database recommended — `php artisan queue:table`)
 
-## Code of Conduct
+## Installation
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+# 1. Clone the repository
+git clone <repo-url> listinghub
+cd listinghub
 
-## Security Vulnerabilities
+# 2. Install PHP dependencies
+composer install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 3. Environment setup
+cp .env.example .env
+php artisan key:generate
+
+# 4. Configure your database in .env
+#    DB_CONNECTION=mysql
+#    DB_HOST=127.0.0.1
+#    DB_PORT=3306
+#    DB_DATABASE=listinghub
+#    DB_USERNAME=root
+#    DB_PASSWORD=
+
+# 5. Run migrations and seed
+php artisan migrate
+php artisan db:seed --class=CategorySeeder
+
+# 6. Install & build frontend assets
+npm install
+npm run build
+
+# 7. Create an admin user (via tinker or register, then set is_admin=1 in DB)
+```
+
+### Quick Start (one command)
+
+```bash
+composer run setup
+```
+
+This runs `composer install`, copies `.env.example`, generates a key, runs migrations, installs npm deps, and builds assets.
+
+### Development Server
+
+```bash
+composer run dev
+```
+
+Runs the PHP server, queue worker, log watcher, and Vite dev server concurrently.
+
+## Default Admin Credentials
+
+```
+Email:    admin@admin.com
+Password: 12345
+```
+
+(Seed this user manually or via a custom seeder — ensure `is_admin` is set to `1`.)
+
+## Project Structure
+
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── AuthController.php          # Web auth + social login
+│   │   ├── JobController.php           # Public job CRUD
+│   │   ├── UserDashboardController.php # User panel (/my)
+│   │   ├── DocsController.php          # API docs page
+│   │   ├── Admin/
+│   │   │   ├── DashboardController.php
+│   │   │   ├── JobController.php
+│   │   │   ├── UserController.php
+│   │   │   └── CategoryController.php
+│   │   └── Api/
+│   │       ├── AuthController.php
+│   │       ├── JobController.php
+│   │       ├── CategoryController.php
+│   │       └── UserController.php
+│   ├── Middleware/
+│   │   ├── AdminMiddleware.php
+│   │   ├── AdminAuthenticate.php
+│   │   └── CheckUserActivity.php
+│   └── Requests/
+│       └── Api/                         # Form request validation
+├── Models/
+│   ├── User.php
+│   ├── Job.php                          # Table: job_listings
+│   └── Category.php
+└── Providers/
+    └── AppServiceProvider.php           # Pagination defaults
+database/
+├── migrations/                           # 10 migration files
+└── seeders/
+    ├── DatabaseSeeder.php
+    └── CategorySeeder.php                # 8 default categories
+resources/views/
+├── components/
+│   ├── layout.blade.php                  # Public layout
+│   ├── admin-layout.blade.php            # Admin layout (sidebar + topbar)
+│   ├── header/                           # Navbar, login/register, logo
+│   ├── button/                           # Button components
+│   └── footer.blade.php
+├── pages/                                # Public pages
+├── user/                                 # User dashboard views
+├── admin/                                # Admin views
+│   ├── dashboard.blade.php
+│   ├── jobs/
+│   ├── users/
+│   └── categories/
+└── docs/
+    └── api.blade.php                     # API documentation
+routes/
+├── web.php                               # Web routes
+└── api.php                                # API routes (prefix: /api)
+```
+
+## Updating an Existing Project
+
+If you've already cloned and configured the project, just:
+
+```bash
+git pull
+composer install
+php artisan migrate
+npm install
+npm run build
+```
+
+## Testing
+
+```bash
+composer run test
+```
+
+This clears the config cache and runs the PHPUnit test suite.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[MIT](LICENSE.md)

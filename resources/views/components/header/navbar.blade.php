@@ -9,8 +9,7 @@
         </li>
 
         <li>
-            <x-header.nav-link href="/contact" :active="request()->is('contact')" >Contact</x-header.nav-link>
+            <x-header.nav-link href="/contact" :active="request()->is('contact')">Contact</x-header.nav-link>
         </li>
     </ul>
-    </nav>
 </div>
