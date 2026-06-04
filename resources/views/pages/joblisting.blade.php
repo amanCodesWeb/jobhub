@@ -40,17 +40,6 @@
                     {{-- Meta info grid --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-600 rounded-lg">
-                            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-teal-100 dark:bg-teal-900/50 text-teal-600 dark:text-teal-400">
-                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Posted by</p>
-                                <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $job->user->first_name }} {{ $job->user->last_name }}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-600 rounded-lg">
                             <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400">
                                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -72,6 +61,20 @@
                                 <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $job->company_name ?? ($job->user->first_name . ' ' . $job->user->last_name) }}</p>
                             </div>
                         </div>
+                        @if ($job->location)
+                            <div class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-600 rounded-lg">
+                                <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400">
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Location</p>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $job->location }}</p>
+                                </div>
+                            </div>
+                        @endif
                         <div class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-600 rounded-lg">
                             <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400">
                                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

@@ -1,5 +1,11 @@
 <x-layout>
-    <x-slot:heading>Latest Job Listings</x-slot:heading>
+    <x-slot:heading>
+        @if ($search)
+            Search results for &ldquo;{{ e($search) }}&rdquo;
+        @else
+            Latest Job Listings
+        @endif
+    </x-slot:heading>
 
     {{-- Success message --}}
     @if (session('success'))
@@ -11,62 +17,88 @@
         </div>
     @endif
 
-    {{-- Job cards --}}
-    <div class="space-y-4">
-        @forelse ($jobs as $job)
-            <a href="/jobs/{{ $job->id }}"
-               class="block bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-teal-300 dark:hover:border-teal-500 hover:-translate-y-0.5 transition-all duration-200">
-                <div class="flex items-start justify-between gap-4">
-                    <div class="min-w-0 flex-1">
-                        <div class="flex items-center gap-2 flex-wrap">
-                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white truncate">{{ $job->title }}</h2>
-                            <span class="inline-flex items-center rounded-full bg-teal-50 dark:bg-teal-900/30 px-2.5 py-0.5 text-xs font-medium text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-700">
-                                ${{ number_format($job->salary) }}/day
-                            </span>
-                        </div>
-                        <div class="mt-2 flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-                            <span class="flex items-center gap-1.5">
-                                <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                                </svg>
-                                {{ $job->user->first_name }} {{ $job->user->last_name }}
-                            </span>
-                            <span class="flex items-center gap-1.5">
-                                <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                {{ $job->created_at->diffForHumans() }}
-                            </span>
-                            <span class="flex items-center gap-1.5">
-                                <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-.75 3h1.5m-1.5 3h1.5m6-12h1.5m-1.5 3h1.5m-.75 3h1.5m-1.5 3h1.5" />
-                                </svg>
-                                {{ $job->company_name ?? ($job->user->first_name . ' ' . $job->user->last_name) }}
-                            </span>
-                        </div>
-                        <p class="mt-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2">
-                            {{ Str::limit($job->description, 160) }}
-                        </p>
-                    </div>
-                    <svg class="w-5 h-5 text-gray-300 dark:text-gray-600 shrink-0 mt-1 group-hover:text-teal-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                    </svg>
-                </div>
-            </a>
-        @empty
-            <div class="text-center py-16">
-                <svg class="mx-auto h-12 w-12 text-gray-300 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75a24.02 24.02 0 01-7.827-1.23 2.18 2.18 0 01-.673-.38m0 0a2.18 2.18 0 01-.75-1.661v-4.25c0-1.081.768-2.015 1.837-2.175a48.086 48.086 0 013.413-.388m0 0c.015.323.04.645.073.967" />
-                </svg>
-                <h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-white">No jobs listed yet</h3>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Be the first to post a job listing!</p>
-                <a href="/jobs/create" class="mt-6 inline-flex items-center rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 transition">Post a Listing</a>
-            </div>
-        @endforelse
-    </div>
-
-    {{-- Pagination --}}
-    <div class="mt-12 mb-4">
-        {{ $jobs->links() }}
+    {{-- Job listings container --}}
+    <div id="job-listings">
+        @include('partials._job-listings')
     </div>
 </x-layout>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const listingsContainer = document.getElementById('job-listings');
+    const headingEl = document.querySelector('h1');
+
+    /**
+     * Fetch listings via AJAX, update the DOM and push the URL.
+     */
+    let currentFetchUrl = null;
+
+    function fetchListings(url) {
+        // Prevent duplicate fetches
+        if (currentFetchUrl === url) return;
+        currentFetchUrl = url;
+
+        const separator = url.includes('?') ? '&' : '?';
+        const ajaxUrl = url + separator + 'ajax=1';
+
+        fetch(ajaxUrl, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(res => {
+            if (!res.ok) throw new Error('Request failed');
+            return res.json();
+        })
+        .then(data => {
+            currentFetchUrl = null;
+
+            // Update heading if search term changed
+            if (data.heading !== undefined) {
+                headingEl.innerHTML = data.heading;
+            }
+
+            // Replace listings content
+            listingsContainer.innerHTML = data.html;
+
+            // Update URL without page reload
+            const cleanUrl = url.replace(/[?&]ajax=1/g, '');
+            window.history.pushState({ search: true }, '', cleanUrl);
+        })
+        .catch(err => {
+            currentFetchUrl = null;
+            // Fallback: full page reload
+            window.location.href = url.replace(/[?&]ajax=1/g, '');
+        });
+    }
+
+    /**
+     * Event delegation: handle pagination clicks on the container.
+     * Only intercept links that contain "page=" in the href.
+     */
+    listingsContainer.addEventListener('click', function (e) {
+        const link = e.target.closest('a[href*="page="]');
+        if (link) {
+            e.preventDefault();
+            fetchListings(link.href);
+        }
+    });
+
+    /**
+     * Intercept search form submission.
+     */
+    const searchForm = document.querySelector('form[action="/"]');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const params = new URLSearchParams(new FormData(this));
+            const searchValue = params.get('search') || '';
+            const url = searchValue ? '/?search=' + encodeURIComponent(searchValue) : '/';
+            fetchListings(url);
+        });
+    }
+
+    // Handle browser back/forward
+    window.addEventListener('popstate', function () {
+        fetchListings(window.location.href);
+    });
+});
+</script>

@@ -32,6 +32,7 @@ class JobController extends Controller
             'category_id' => ['nullable', 'exists:categories,id'],
             'salary'      => ['required', 'numeric', 'min:100'],
             'description' => ['required', 'string'],
+            'location'    => ['nullable', 'string', 'max:255'],
             // 'user_id'  => ['sometimes', 'exists:users,id'], // REMOVED — prevents admin from reassigning job ownership
         ]);
 

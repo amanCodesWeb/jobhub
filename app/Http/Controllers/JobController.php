@@ -8,12 +8,43 @@ use Illuminate\Support\Facades\Gate;
 
 class JobController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jobs = Job::with('user')->paginate(5);
+        $query = Job::with('user');
+
+        if ($search = $request->query('search')) {
+            $search = trim($search);
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('company_name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('location', 'like', "%{$search}%");
+            });
+        }
+
+        $jobs = $query->paginate(5);
+
+        // AJAX request: return JSON with rendered partial
+        if ($request->ajax() || $request->query('ajax')) {
+            $html = view('partials._job-listings', [
+                'jobs' => $jobs,
+                'search' => $search ?? null,
+            ])->render();
+
+            $heading = $search
+                ? 'Search results for &ldquo;' . e($search) . '&rdquo;'
+                : 'Latest Job Listings';
+
+            return response()->json([
+                'html' => $html,
+                'heading' => $heading,
+                'search' => $search ?? null,
+            ]);
+        }
 
         return view('pages.homepage', [
             'jobs' => $jobs,
+            'search' => $search ?? null,
         ]);
     }
 
@@ -37,6 +68,7 @@ class JobController extends Controller
             'category_id' => ['nullable', 'exists:categories,id'],
             'salary'      => ['required', 'numeric', 'min:100'],
             'description' => ['required', 'string'],
+            'location'    => ['nullable', 'string', 'max:255'],
         ]);
 
         $job = $request->user()->jobs()->create([
@@ -45,6 +77,7 @@ class JobController extends Controller
             'category_id' => $validated['category_id'] ?? null,
             'salary'      => $validated['salary'],
             'description' => trim($validated['description']),
+            'location'    => $validated['location'] ?? null,
         ]);
 
         return redirect('/jobs/' . $job->id)
@@ -70,6 +103,7 @@ class JobController extends Controller
             'category_id' => ['nullable', 'exists:categories,id'],
             'salary'      => ['required', 'numeric', 'min:100'],
             'description' => ['required', 'string'],
+            'location'    => ['nullable', 'string', 'max:255'],
         ]);
 
         $job->update([
@@ -78,6 +112,7 @@ class JobController extends Controller
             'category_id' => $validated['category_id'] ?? null,
             'salary'      => $validated['salary'],
             'description' => trim($validated['description']),
+            'location'    => $validated['location'] ?? null,
         ]);
 
         return redirect('/jobs/' . $job->id)

@@ -19,11 +19,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'create']);
     Route::post('/register', [AuthController::class, 'store']);
     Route::get('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/login', [AuthController::class, 'authenticate'])->middleware('throttle:5,60');
+    Route::post('/login', [AuthController::class, 'authenticate'])->middleware('throttle:20,60');
 
     // Admin login portal (separate URL)
     Route::get('/admin.php', [AuthController::class, 'adminLogin']);
-    Route::post('/admin.php', [AuthController::class, 'adminAuthenticate'])->middleware('throttle:3,60');
+    Route::post('/admin.php', [AuthController::class, 'adminAuthenticate'])->middleware('throttle:10,60');
 
     // Social login
     Route::get('/auth/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('auth.google');

@@ -12,7 +12,7 @@ class Job extends Model
     use HasFactory, Notifiable;
 
     protected $table = 'job_listings';
-    protected $fillable = ['title', 'company_name', 'category_id', 'salary', 'description'];
+    protected $fillable = ['title', 'company_name', 'category_id', 'salary', 'description', 'location'];
 
     public function user(){
         return $this->belongsTo(User::class);
