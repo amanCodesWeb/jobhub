@@ -12,8 +12,7 @@
         </a>
     </div>
 
-    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm">
-        <div class="overflow-x-auto">
+    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm overflow-x-auto draggable-table">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
@@ -76,7 +75,6 @@
                     @endforelse
                 </tbody>
             </table>
-        </div>
     </div>
 
     <div class="mt-6">

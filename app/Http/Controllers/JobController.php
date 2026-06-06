@@ -10,7 +10,7 @@ class JobController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Job::with('user');
+        $query = Job::with('user')->approved();
 
         if ($search = $request->query('search')) {
             $search = trim($search);
@@ -50,6 +50,13 @@ class JobController extends Controller
 
     public function show(Job $job)
     {
+        // Only show approved listings to the public, unless the viewer is the owner or an admin
+        if ($job->status !== Job::STATUS_APPROVED) {
+            if (!auth()->check() || (auth()->id() !== $job->user_id && !auth()->user()->is_admin)) {
+                abort(404);
+            }
+        }
+
         return view('pages.joblisting', [
             'job' => $job->load('user', 'category'),
         ]);

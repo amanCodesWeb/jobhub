@@ -14,7 +14,7 @@
     {{-- heading --}}
     @if (trim((string) $heading))
     <div class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm">
-        <div class="mx-auto mx-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <div class="flex items-center gap-4">
                 @if ($backUrl ?? false)
                     <a href="{{ $backUrl }}" class="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600 transition shrink-0">
@@ -30,7 +30,7 @@
     @endif
 
     <main class="flex-1">
-        <div class="mx-auto mx-w-7xl px-4 py-8 sm:py-10 lg:px-8 pb-12 sm:pb-16">
+        <div class="mx-auto max-w-7xl px-4 py-8 sm:py-10 lg:px-8 pb-12 sm:pb-16">
             {{$slot}}
         </div>
     </main>

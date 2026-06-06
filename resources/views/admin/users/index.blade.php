@@ -1,15 +1,6 @@
 <x-admin-layout>
     <x-slot:heading>User Management</x-slot:heading>
 
-    @if (session('success'))
-        <div class="mb-6 flex items-center gap-3 p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 rounded-xl">
-            <svg class="w-5 h-5 shrink-0 text-green-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p class="text-sm font-medium">{{ session('success') }}</p>
-        </div>
-    @endif
-
     {{-- Tabs --}}
     <div class="mb-6 border-b border-gray-200 dark:border-gray-700">
         <nav class="flex gap-6 -mb-px">
@@ -34,8 +25,7 @@
         </nav>
     </div>
 
-    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm">
-        <div class="overflow-x-auto">
+    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm overflow-x-auto draggable-table">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
@@ -114,7 +104,6 @@
                     @endforelse
                 </tbody>
             </table>
-        </div>
     </div>
 
     <div class="mt-6">

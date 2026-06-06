@@ -1,5 +1,5 @@
 <x-admin-layout>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {{-- Jobs card --}}
         <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
             <div class="flex items-center gap-4">
@@ -15,6 +15,24 @@
             </div>
             <a href="{{ route('admin.jobs.index') }}" class="mt-4 inline-flex items-center text-sm font-medium text-teal-600 dark:text-teal-400 hover:text-teal-500">
                 Manage Jobs &rarr;
+            </a>
+        </div>
+
+        {{-- Pending Approvals card --}}
+        <div class="bg-white dark:bg-gray-900 border border-amber-200 dark:border-amber-800/50 rounded-xl p-6 shadow-sm">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm text-amber-600 dark:text-amber-400 font-medium">Pending Approval</p>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['pending_count'] }}</p>
+                </div>
+            </div>
+            <a href="{{ route('admin.jobs.index') }}" class="mt-4 inline-flex items-center text-sm font-medium text-amber-600 dark:text-amber-400 hover:text-amber-500">
+                Review Listings &rarr;
             </a>
         </div>
 
@@ -39,7 +57,7 @@
         {{-- Admins card --}}
         <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
             <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                <div class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                     </svg>

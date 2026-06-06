@@ -54,9 +54,17 @@ Route::middleware(['admin.auth', 'admin'])->prefix('/admin')->name('admin.')->gr
 
     // Job management
     Route::get('/jobs', [AdminJobController::class, 'index'])->name('jobs.index');
+    Route::get('/jobs/trashed', [AdminJobController::class, 'trashed'])->name('jobs.trashed');
+    Route::delete('/jobs/trashed/delete-all', [AdminJobController::class, 'forceDeleteAll'])->name('jobs.force-delete-all');
+    Route::delete('/jobs/trashed/delete-older', [AdminJobController::class, 'forceDeleteOlderThan'])->name('jobs.force-delete-older');
     Route::get('/jobs/{job}/edit', [AdminJobController::class, 'edit'])->name('jobs.edit');
     Route::patch('/jobs/{job}', [AdminJobController::class, 'update'])->name('jobs.update');
     Route::delete('/jobs/{job}', [AdminJobController::class, 'destroy'])->name('jobs.destroy');
+    Route::delete('/jobs/trashed/{id}', [AdminJobController::class, 'forceDestroy'])->name('jobs.force-destroy');
+    Route::patch('/jobs/{job}/approve', [AdminJobController::class, 'approve'])->name('jobs.approve');
+    Route::patch('/jobs/{job}/reject', [AdminJobController::class, 'reject'])->name('jobs.reject');
+    Route::patch('/jobs/{job}/pending', [AdminJobController::class, 'pending'])->name('jobs.pending');
+    Route::get('/jobs/{job}/preview', [AdminJobController::class, 'preview'])->name('jobs.preview');
 
     // User management
     Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');

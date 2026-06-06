@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin - {{ $heading ?? 'Dashboard' }} | ListingHub</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        .draggable-table { cursor: grab; }
+        .draggable-table.dragging { cursor: grabbing; user-select: none; }
+        .draggable-table.dragging * { user-select: none; pointer-events: none; }
+    </style>
 </head>
 <body class="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
     <div class="flex h-screen overflow-hidden">
@@ -28,7 +33,7 @@
                     Dashboard
                 </a>
                 <a href="{{ route('admin.jobs.index') }}"
-                   class="flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg {{ request()->routeIs('admin.jobs*') ? 'bg-teal-600/20 text-teal-300 font-medium' : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200' }} transition">
+                   class="flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg {{ request()->routeIs('admin.jobs*') && !request()->routeIs('admin.jobs.trashed') ? 'bg-teal-600/20 text-teal-300 font-medium' : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200' }} transition">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75a24.02 24.02 0 01-7.827-1.23 2.18 2.18 0 01-.673-.38m0 0a2.18 2.18 0 01-.75-1.661v-4.25c0-1.081.768-2.015 1.837-2.175a48.086 48.086 0 013.413-.388" />
                     </svg>
@@ -48,6 +53,14 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />
                     </svg>
                     Categories
+                </a>
+                <div class="border-t border-gray-800 my-2"></div>
+                <a href="{{ route('admin.jobs.trashed') }}"
+                   class="flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg {{ request()->routeIs('admin.jobs.trashed') ? 'bg-red-600/20 text-red-300 font-medium' : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200' }} transition">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg>
+                    Trashed
                 </a>
             </nav>
 
@@ -120,5 +133,50 @@
             </main>
         </div>
     </div>
+    <script>
+        function initDraggableTables() {
+            document.querySelectorAll('.draggable-table').forEach(function(el) {
+                // Skip already-initialized tables
+                if (el.dataset.dragInit) return;
+                el.dataset.dragInit = '1';
+
+                var isDown = false, startX, scrollLeft, moved = false;
+
+                el.addEventListener('mousedown', function(e) {
+                    isDown = true;
+                    moved = false;
+                    startX = e.pageX - el.offsetLeft;
+                    scrollLeft = el.scrollLeft;
+                });
+
+                el.addEventListener('mouseleave', function() {
+                    if (isDown) el.classList.remove('dragging');
+                    isDown = false;
+                    moved = false;
+                });
+
+                el.addEventListener('mouseup', function() {
+                    isDown = false;
+                    el.classList.remove('dragging');
+                });
+
+                el.addEventListener('mousemove', function(e) {
+                    if (!isDown) return;
+                    var x = e.pageX - el.offsetLeft;
+                    var diff = x - startX;
+                    if (Math.abs(diff) > 5) {
+                        if (!moved) {
+                            el.classList.add('dragging');
+                            moved = true;
+                        }
+                        e.preventDefault();
+                        el.scrollLeft = scrollLeft - diff;
+                    }
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initDraggableTables);
+    </script>
 </body>
 </html>

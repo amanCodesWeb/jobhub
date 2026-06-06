@@ -143,6 +143,27 @@
                         @enderror
                     </div>
 
+                    {{-- Status --}}
+                    <div>
+                        <label for="status" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Listing Status</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <select id="status" name="status"
+                                class="block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 pl-10 pr-3 py-2.5 text-sm text-gray-900 dark:text-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition @error('status') border-red-400 @enderror">
+                                <option value="pending" {{ old('status', $job->status) === 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="approved" {{ old('status', $job->status) === 'approved' ? 'selected' : '' }}>Approved</option>
+                                <option value="rejected" {{ old('status', $job->status) === 'rejected' ? 'selected' : '' }}>Rejected</option>
+                            </select>
+                        </div>
+                        @error('status')
+                            <p class="mt-1.5 text-xs text-red-600 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     {{-- Description --}}
                     <div>
                         <label for="description" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Description</label>
@@ -178,7 +199,7 @@
                     </svg>
                     Danger Zone
                 </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Permanently delete this job listing. This action cannot be undone.</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Move this job listing to the trash. It can be restored or permanently deleted from the Trashed tab.</p>
                 <div class="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800 rounded-lg">
                     <div>
                         <p class="text-sm font-medium text-gray-900 dark:text-white">Delete "{{ $job->title }}"</p>
@@ -202,7 +223,7 @@
 
             <script>
                 function confirmJobDelete() {
-                    if (confirm('Are you sure you want to permanently delete "{{ $job->title }}" (#' + {{ $job->id }} + ')? This cannot be undone.')) {
+                    if (confirm('Move "{{ $job->title }}" (#' + {{ $job->id }} + ') to trash? You can restore it from the Trashed tab.')) {
                         document.getElementById('delete-job-form').submit();
                     }
                 }
@@ -220,7 +241,16 @@
                     </div>
                     <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
                         <span class="text-gray-500 dark:text-gray-400">Status</span>
-                        <span class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/30 px-2 py-0.5 text-xs font-medium text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">Active</span>
+                        @php
+                            $badgeClasses = [
+                                'approved' => 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800',
+                                'pending'  => 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800',
+                                'rejected' => 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800',
+                            ];
+                        @endphp
+                        <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium border {{ $badgeClasses[$job->status] ?? 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700' }}">
+                            {{ ucfirst($job->status) }}
+                        </span>
                     </div>
                     <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
                         <span class="text-gray-500 dark:text-gray-400">Salary</span>
@@ -250,7 +280,7 @@
                     </svg>
                 </div>
                 <h4 class="text-sm font-semibold text-teal-800 dark:text-teal-300">Admin Management</h4>
-                <p class="text-xs text-teal-600 dark:text-teal-400 mt-1">From here you can edit listing details or permanently delete this listing.</p>
+                <p class="text-xs text-teal-600 dark:text-teal-400 mt-1">From here you can edit listing details, approve/reject, or move to trash.</p>
             </div>
         </div>
     </div>

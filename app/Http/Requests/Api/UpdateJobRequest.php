@@ -25,6 +25,7 @@ class UpdateJobRequest extends FormRequest
             'category_id'  => ['nullable', 'exists:categories,id'],
             'salary'       => ['sometimes', 'required', 'integer', 'min:100'],
             'description'  => ['sometimes', 'required', 'string'],
+            'location'     => ['nullable', 'string', 'max:255'],
         ];
     }
 }

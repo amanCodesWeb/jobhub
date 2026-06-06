@@ -144,7 +144,13 @@
                 <div class="space-y-3">
                     <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
                         <span class="text-sm text-gray-500 dark:text-gray-400">Status</span>
-                        <span class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/30 px-2.5 py-0.5 text-xs font-medium text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">Active</span>
+                        @php
+                            $labels = ['approved' => 'Active', 'pending' => 'Pending', 'rejected' => 'Rejected'];
+                            $colors = ['approved' => 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800', 'pending' => 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800', 'rejected' => 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800'];
+                        @endphp
+                        <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border {{ $colors[$job->status] ?? 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-600' }}">
+                            {{ $labels[$job->status] ?? ucfirst($job->status) }}
+                        </span>
                     </div>
                     <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
                         <span class="text-sm text-gray-500 dark:text-gray-400">Job ID</span>
@@ -156,7 +162,7 @@
                     </div>
                     <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
                         <span class="text-sm text-gray-500 dark:text-gray-400">Category</span>
-                        <span class="text-sm text-gray-900 dark:text-white">Development</span>
+                        <span class="text-sm text-gray-900 dark:text-white">{{ $job->category->name ?? 'Uncategorized' }}</span>
                     </div>
                     <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
                         <span class="text-sm text-gray-500 dark:text-gray-400">Company</span>

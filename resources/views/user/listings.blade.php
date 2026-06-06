@@ -71,6 +71,7 @@
                             <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden sm:table-cell">Company</th>
                             <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden sm:table-cell">Location</th>
                             <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:table-cell">Category</th>
+                            <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:table-cell">Status</th>
                             <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:table-cell">Posted</th>
                             <th class="text-right px-6 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                         </tr>
@@ -97,6 +98,18 @@
                                 <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400 hidden md:table-cell">
                                     {{ $job->category?->name ?? '—' }}
                                 </td>
+                                <td class="px-6 py-4 whitespace-nowrap hidden md:table-cell">
+                                    @php
+                                        $badgeClasses = [
+                                            'approved' => 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800',
+                                            'pending'  => 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800',
+                                            'rejected' => 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800',
+                                        ];
+                                    @endphp
+                                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border {{ $badgeClasses[$job->status] ?? 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700' }}">
+                                        {{ ucfirst($job->status) }}
+                                    </span>
+                                </td>
                                 <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 hidden md:table-cell">
                                     {{ $job->created_at->format('M d, Y') }}
                                 </td>
@@ -106,7 +119,7 @@
                                            class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition">
                                             Edit
                                         </a>
-                                        <form method="POST" action="/jobs/{{ $job->id }}" class="inline" onsubmit="return confirm('Delete &quot;{{ $job->title }}&quot;? This cannot be undone.')">
+                                        <form method="POST" action="/jobs/{{ $job->id }}" class="inline" onsubmit="return confirm('Soft-delete &quot;{{ $job->title }}&quot;? You can restore it from trash.')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"

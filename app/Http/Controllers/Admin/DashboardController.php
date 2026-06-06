@@ -12,9 +12,10 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard', [
             'stats' => [
-                'jobs_count' => Job::count(),
-                'users_count' => User::count(),
-                'admins_count' => User::where('is_admin', true)->count(),
+                'jobs_count'    => Job::count(),
+                'pending_count' => Job::pending()->count(),
+                'users_count'   => User::count(),
+                'admins_count'  => User::where('is_admin', true)->count(),
             ],
         ]);
     }

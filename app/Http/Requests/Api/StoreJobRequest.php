@@ -19,6 +19,7 @@ class StoreJobRequest extends FormRequest
             'category_id'  => ['nullable', 'exists:categories,id'],
             'salary'       => ['required', 'integer', 'min:100'],
             'description'  => ['required', 'string'],
+            'location'     => ['nullable', 'string', 'max:255'],
         ];
     }
 }

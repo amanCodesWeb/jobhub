@@ -33,6 +33,7 @@
                             <li><a href="#login" class="docs-nav-link block px-2 py-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Login</a></li>
                             <li><a href="#logout" class="docs-nav-link block px-2 py-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Logout</a></li>
                             <li><a href="#user" class="docs-nav-link block px-2 py-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Get Current User</a></li>
+                            <li><a href="#update-profile" class="docs-nav-link block px-2 py-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Update Profile</a></li>
                         </ul>
                     </div>
 
@@ -60,6 +61,14 @@
                         <ul class="space-y-0.5">
                             <li><a href="#my-stats" class="docs-nav-link block px-2 py-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Statistics</a></li>
                             <li><a href="#my-jobs" class="docs-nav-link block px-2 py-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">My Listings</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="px-2 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Admin</h4>
+                        <ul class="space-y-0.5">
+                            <li><a href="#approve-job" class="docs-nav-link block px-2 py-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Job Approval</a></li>
+                            <li><a href="#create-category" class="docs-nav-link block px-2 py-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Category Management</a></li>
                         </ul>
                     </div>
 
@@ -98,6 +107,7 @@
                             <li><a href="#login" class="block px-2 py-1 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Login</a></li>
                             <li><a href="#logout" class="block px-2 py-1 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Logout</a></li>
                             <li><a href="#user" class="block px-2 py-1 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Get Current User</a></li>
+                            <li><a href="#update-profile" class="block px-2 py-1 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Update Profile</a></li>
                         </ul>
                     </div>
                     <div>
@@ -122,6 +132,13 @@
                         <ul class="space-y-0.5">
                             <li><a href="#my-stats" class="block px-2 py-1 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Statistics</a></li>
                             <li><a href="#my-jobs" class="block px-2 py-1 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">My Listings</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">Admin</p>
+                        <ul class="space-y-0.5">
+                            <li><a href="#approve-job" class="block px-2 py-1 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Job Approval</a></li>
+                            <li><a href="#create-category" class="block px-2 py-1 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Category Management</a></li>
                         </ul>
                     </div>
                 </div>
@@ -197,7 +214,19 @@
                     </div>
 
                     <div class="docs-info">
-                        <p>To use a protected endpoint, pass your token as: <code>Authorization: Bearer 1|abc123...</code></p>
+                        <p>To use a protected endpoint, pass your token as: <code>Authorization: Bearer 1|abc1...</code></p>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mt-8 mb-3">Quick Start — Default Accounts</h3>
+                    <p class="text-gray-600 dark:text-gray-300">After running <code class="text-gray-900 dark:text-gray-100 font-semibold">php artisan migrate --seed</code>, the seeder creates two accounts and sample data:</p>
+                    <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+                        <table class="docs-table">
+                            <thead><tr><th>Role</th><th>Email</th><th>Password</th></tr></thead>
+                            <tbody>
+                                <tr><td>Admin</td><td><code>admin@admin.com</code></td><td><code>12345</code></td></tr>
+                                <tr><td>Regular User</td><td><code>user@user.com</code></td><td><code>12345</code></td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
@@ -374,13 +403,69 @@
                 </div>
             </section>
 
+            {{-- ─── Update Profile ─────────────────────────────────────── --}}
+            <section id="update-profile" class="scroll-mt-20 mt-16">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Update Profile</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Update the authenticated user's profile information.</p>
+
+                <div class="docs-endpoint">
+                    <div class="docs-endpoint-head">
+                        <span class="docs-method docs-method-patch">PATCH</span>
+                        <code class="text-sm font-semibold text-gray-900 dark:text-gray-100 break-all">{{ url('/api/user') }}</code>
+                    </div>
+
+                    <div class="docs-warn">
+                        <p><strong>Authentication required.</strong> Must include <code>Authorization: Bearer *** header.</p>
+                    </div>
+
+                    <h4 class="docs-h4">Request Body <span class="text-xs font-normal text-gray-500 dark:text-gray-400">(partial update — all fields optional)</span></h4>
+                    <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+                        <table class="docs-table">
+                            <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>first_name</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Max 255 characters</td></tr>
+                                <tr><td><code>last_name</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Max 255 characters</td></tr>
+                                <tr><td><code>email</code></td><td>string (email)</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Must be unique. Max 255 characters.</td></tr>
+                                <tr><td><code>password</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Must be confirmed. At least 8 characters.</td></tr>
+                                <tr><td><code>password_confirmation</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Must match <code>password</code> if provided</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="docs-code-label">Example Request</div>
+                    <pre class="docs-code"><code><span class="text-gray-500"># </span>curl -X PATCH {{ url('/api/user') }} \
+  -H <span class="text-emerald-400">"Accept: application/json"</span> \
+  -H <span class="text-emerald-400">"Content-Type: application/json"</span> \
+  -H <span class="text-emerald-400">"Authorization: Bearer *** </span> \
+  -d <span class="text-emerald-400">'{
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "email": "jane@example.com"
+  }'</span></code></pre>
+
+                    <div class="docs-code-label">Response <span class="text-gray-500 dark:text-gray-400">— 200 OK</span></div>
+                    <pre class="docs-code"><code>{
+  <span class="text-emerald-400">"message"</span>: <span class="text-emerald-400">"Profile updated successfully."</span>,
+  <span class="text-emerald-400">"data"</span>: {
+    <span class="text-emerald-400">"id"</span>: <span class="text-amber-300">1</span>,
+    <span class="text-emerald-400">"first_name"</span>: <span class="text-emerald-400">"Jane"</span>,
+    <span class="text-emerald-400">"last_name"</span>: <span class="text-emerald-400">"Smith"</span>,
+    <span class="text-emerald-400">"email"</span>: <span class="text-emerald-400">"jane@example.com"</span>,
+    <span class="text-emerald-400">"is_admin"</span>: <span class="text-purple-400">false</span>,
+    <span class="text-emerald-400">"created_at"</span>: <span class="text-emerald-400">"2026-06-02T00:00:00.000000Z"</span>,
+    <span class="text-emerald-400">"updated_at"</span>: <span class="text-emerald-400">"2026-06-02T00:00:00.000000Z"</span>
+  }
+}</code></pre>
+                </div>
+            </section>
+
             {{-- ─── Jobs ──────────────────────────────────────────────── --}}
             <section id="list-jobs" class="scroll-mt-20 mt-16">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Jobs</h2>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Public read endpoints. Authenticated write endpoints are owner-scoped.</p>
 
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mt-10 mb-1">List All Listings</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Returns a paginated list of all job listings, ordered by newest first.</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Returns a paginated list of job listings, ordered by newest first. Only approved listings are shown to the public. Authenticated users can use <code>my=1</code> to see their own, and admins can filter by status.</p>
 
                 <div class="docs-endpoint">
                     <div class="docs-endpoint-head">
@@ -394,12 +479,19 @@
                             <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
                             <tbody>
                                 <tr><td><code>per_page</code></td><td>integer</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Results per page (default: <code>10</code>)</td></tr>
+                                <tr><td><code>search</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Search by title, company, description, or location</td></tr>
+                                <tr><td><code>category_id</code></td><td>integer</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Filter by category ID</td></tr>
+                                <tr><td><code>location</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Filter by location (partial match)</td></tr>
+                                <tr><td><code>salary_min</code></td><td>integer</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Minimum salary filter</td></tr>
+                                <tr><td><code>salary_max</code></td><td>integer</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Maximum salary filter</td></tr>
+                                <tr><td><code>my</code></td><td>boolean</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Show only your listings (requires auth)</td></tr>
+                                <tr><td><code>status</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Filter by status: <code>pending</code>, <code>approved</code>, <code>rejected</code> (admins only, or with <code>my=1</code>)</td></tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="docs-code-label">Example Request</div>
-                    <pre class="docs-code"><code><span class="text-gray-500"># </span>curl <span class="text-emerald-400">"{{ url('/api/jobs?per_page=5') }}"</span> \
+                    <pre class="docs-code"><code><span class="text-gray-500"># </span>curl <span class="text-emerald-400">"{{ url('/api/jobs?search=laravel&salary_min=80000&per_page=5') }}"</span> \
   -H <span class="text-emerald-400">"Accept: application/json"</span></code></pre>
 
                     <div class="docs-code-label">Response <span class="text-gray-500 dark:text-gray-400">— 200 OK</span></div>
@@ -435,7 +527,7 @@
 
             <section id="show-job" class="scroll-mt-20 mt-16">
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Get a Single Listing</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Returns the details of a specific job listing.</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Returns the details of a specific job listing. Only approved listings are visible to the public. The owner or an admin can view their non-approved listings.</p>
 
                 <div class="docs-endpoint">
                     <div class="docs-endpoint-head">
@@ -476,7 +568,7 @@
 
             <section id="create-job" class="scroll-mt-20 mt-16">
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Create a Listing</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Create a new job listing. The authenticated user is automatically set as the owner.</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Create a new job listing. The authenticated user is automatically set as the owner. <strong>Non-admin users' listings are created in <code>pending</code> status</strong> and require an admin to approve them before they become visible to the public. Admin users' listings are auto-approved.</p>
 
                 <div class="docs-endpoint">
                     <div class="docs-endpoint-head">
@@ -498,6 +590,7 @@
                                 <tr><td><code>category_id</code></td><td>integer</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Must reference an existing category</td></tr>
                                 <tr><td><code>salary</code></td><td>integer</td><td><span class="docs-tag docs-tag-req">Required</span></td><td>Minimum <code>100</code></td></tr>
                                 <tr><td><code>description</code></td><td>string</td><td><span class="docs-tag docs-tag-req">Required</span></td><td>Job description (text)</td></tr>
+                                <tr><td><code>location</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Job location (e.g. city, remote)</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -506,13 +599,14 @@
                     <pre class="docs-code"><code><span class="text-gray-500"># </span>curl -X POST {{ url('/api/jobs') }} \
   -H <span class="text-emerald-400">"Accept: application/json"</span> \
   -H <span class="text-emerald-400">"Content-Type: application/json"</span> \
-  -H <span class="text-emerald-400">"Authorization: Bearer 2|def4..."</span> \
+  -H <span class="text-emerald-400">"Authorization: Bearer *** </span> \
   -d <span class="text-emerald-400">'{
     "title": "Senior Laravel Developer",
     "company_name": "Acme Inc",
     "category_id": 1,
     "salary": 120000,
-    "description": "We are looking for an experienced Laravel developer..."
+    "description": "We are looking for an experienced Laravel developer...",
+    "location": "Remote — US"
   }'</span></code></pre>
 
                     <div class="docs-code-label">Response <span class="text-gray-500 dark:text-gray-400">— 201 Created</span></div>
@@ -524,6 +618,8 @@
     <span class="text-emerald-400">"company_name"</span>: <span class="text-emerald-400">"Acme Inc"</span>,
     <span class="text-emerald-400">"salary"</span>: <span class="text-amber-300">120000</span>,
     <span class="text-emerald-400">"description"</span>: <span class="text-emerald-400">"We are looking for an experienced Laravel developer..."</span>,
+    <span class="text-emerald-400">"location"</span>: <span class="text-emerald-400">"Remote — US"</span>,
+    <span class="text-emerald-400">"status"</span>: <span class="text-emerald-400">"pending"</span>,
     <span class="text-emerald-400">"category"</span>: { <span class="text-emerald-400">"id"</span>: <span class="text-amber-300">1</span>, <span class="text-emerald-400">"name"</span>: <span class="text-emerald-400">"Technology"</span>, <span class="text-emerald-400">"slug"</span>: <span class="text-emerald-400">"technology"</span> },
     <span class="text-emerald-400">"created_at"</span>: <span class="text-emerald-400">"2026-06-02T00:00:00.000000Z"</span>,
     <span class="text-emerald-400">"updated_at"</span>: <span class="text-emerald-400">"2026-06-02T00:00:00.000000Z"</span>
@@ -566,6 +662,7 @@
                                 <tr><td><code>category_id</code></td><td>integer</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Must reference an existing category</td></tr>
                                 <tr><td><code>salary</code></td><td>integer</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Minimum <code>100</code></td></tr>
                                 <tr><td><code>description</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Job description (text)</td></tr>
+                                <tr><td><code>location</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Pass <code>null</code> to clear</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -798,6 +895,199 @@
   <span class="text-emerald-400">"meta"</span>: { <span class="text-gray-500">...</span> },
   <span class="text-emerald-400">"links"</span>: { <span class="text-gray-500">...</span> }
 }</code></pre>
+                </div>
+            </section>
+
+            {{-- ─── Admin: Job Approval ────────────────────────────────── --}}
+            <section id="approve-job" class="scroll-mt-20 mt-16">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Admin — Job Approval</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Admin-only endpoints for managing job listing status. Requires <code>is_admin</code> privileges.</p>
+
+                <p class="text-gray-600 dark:text-gray-300 text-sm mb-6">All admin endpoints require <span class="docs-tag docs-tag-req">auth:sanctum</span> + <span class="docs-tag docs-tag-req">admin</span> middleware. Non-admins receive a <code>403 Forbidden</code> response.</p>
+
+                {{-- Approve --}}
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mt-10 mb-1">Approve a Listing</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Approve a pending or rejected listing, making it visible to the public.</p>
+
+                <div class="docs-endpoint">
+                    <div class="docs-endpoint-head">
+                        <span class="docs-method docs-method-patch">PATCH</span>
+                        <code class="text-sm font-semibold text-gray-900 dark:text-gray-100 break-all">{{ url('/api/admin/jobs/{id}/approve') }}</code>
+                    </div>
+
+                    <div class="docs-code-label">Example Request</div>
+                    <pre class="docs-code"><code><span class="text-gray-500"># </span>curl -X PATCH {{ url('/api/admin/jobs/1/approve') }} \
+  -H <span class="text-emerald-400">"Accept: application/json"</span> \
+  -H <span class="text-emerald-400">"Authorization: Bearer ***</span></code></pre>
+
+                    <div class="docs-code-label">Response <span class="text-gray-500 dark:text-gray-400">— 200 OK</span></div>
+                    <pre class="docs-code"><code>{
+  <span class="text-emerald-400">"message"</span>: <span class="text-emerald-400">"Listing approved successfully."</span>,
+  <span class="text-emerald-400">"data"</span>: { <span class="text-gray-500">/* JobResource with status: "approved" */</span> }
+}</code></pre>
+                </div>
+
+                {{-- Reject --}}
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mt-10 mb-1">Reject a Listing</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Reject a listing, hiding it from public view.</p>
+
+                <div class="docs-endpoint">
+                    <div class="docs-endpoint-head">
+                        <span class="docs-method docs-method-patch">PATCH</span>
+                        <code class="text-sm font-semibold text-gray-900 dark:text-gray-100 break-all">{{ url('/api/admin/jobs/{id}/reject') }}</code>
+                    </div>
+
+                    <div class="docs-code-label">Example Request</div>
+                    <pre class="docs-code"><code><span class="text-gray-500"># </span>curl -X PATCH {{ url('/api/admin/jobs/1/reject') }} \
+  -H <span class="text-emerald-400">"Accept: application/json"</span> \
+  -H <span class="text-emerald-400">"Authorization: Bearer ***</span></code></pre>
+
+                    <div class="docs-code-label">Response <span class="text-gray-500 dark:text-gray-400">— 200 OK</span></div>
+                    <pre class="docs-code"><code>{
+  <span class="text-emerald-400">"message"</span>: <span class="text-emerald-400">"Listing rejected."</span>,
+  <span class="text-emerald-400">"data"</span>: { <span class="text-gray-500">/* JobResource with status: "rejected" */</span> }
+}</code></pre>
+                </div>
+
+                {{-- Pending --}}
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mt-10 mb-1">Move to Pending</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Move an approved or rejected listing back to pending review status.</p>
+
+                <div class="docs-endpoint">
+                    <div class="docs-endpoint-head">
+                        <span class="docs-method docs-method-patch">PATCH</span>
+                        <code class="text-sm font-semibold text-gray-900 dark:text-gray-100 break-all">{{ url('/api/admin/jobs/{id}/pending') }}</code>
+                    </div>
+
+                    <div class="docs-code-label">Example Request</div>
+                    <pre class="docs-code"><code><span class="text-gray-500"># </span>curl -X PATCH {{ url('/api/admin/jobs/1/pending') }} \
+  -H <span class="text-emerald-400">"Accept: application/json"</span> \
+  -H <span class="text-emerald-400">"Authorization: Bearer ***</span></code></pre>
+
+                    <div class="docs-code-label">Response <span class="text-gray-500 dark:text-gray-400">— 200 OK</span></div>
+                    <pre class="docs-code"><code>{
+  <span class="text-emerald-400">"message"</span>: <span class="text-emerald-400">"Listing moved back to pending."</span>,
+  <span class="text-emerald-400">"data"</span>: { <span class="text-gray-500">/* JobResource with status: "pending" */</span> }
+}</code></pre>
+                </div>
+            </section>
+
+            {{-- ─── Admin: Category Management ─────────────────────────── --}}
+            <section id="create-category" class="scroll-mt-20 mt-16">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Admin — Category Management</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Admin-only endpoints for managing categories.</p>
+
+                {{-- Create Category --}}
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mt-10 mb-1">Create a Category</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Create a new job category.</p>
+
+                <div class="docs-endpoint">
+                    <div class="docs-endpoint-head">
+                        <span class="docs-method docs-method-post">POST</span>
+                        <code class="text-sm font-semibold text-gray-900 dark:text-gray-100 break-all">{{ url('/api/admin/categories') }}</code>
+                    </div>
+
+                    <h4 class="docs-h4">Request Body</h4>
+                    <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+                        <table class="docs-table">
+                            <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>name</code></td><td>string</td><td><span class="docs-tag docs-tag-req">Required</span></td><td>Max 255 characters</td></tr>
+                                <tr><td><code>slug</code></td><td>string</td><td><span class="docs-tag docs-tag-req">Required</span></td><td>Unique, max 255 characters</td></tr>
+                                <tr><td><code>description</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Max 1000 characters</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="docs-code-label">Example Request</div>
+                    <pre class="docs-code"><code><span class="text-gray-500"># </span>curl -X POST {{ url('/api/admin/categories') }} \
+  -H <span class="text-emerald-400">"Accept: application/json"</span> \
+  -H <span class="text-emerald-400">"Content-Type: application/json"</span> \
+  -H <span class="text-emerald-400">"Authorization: Bearer ***</span> \
+  -d <span class="text-emerald-400">'{
+    "name": "Marketing",
+    "slug": "marketing",
+    "description": "Marketing and advertising roles"
+  }'</span></code></pre>
+
+                    <div class="docs-code-label">Response <span class="text-gray-500 dark:text-gray-400">— 201 Created</span></div>
+                    <pre class="docs-code"><code>{
+  <span class="text-emerald-400">"message"</span>: <span class="text-emerald-400">"Category created successfully."</span>,
+  <span class="text-emerald-400">"data"</span>: {
+    <span class="text-emerald-400">"id"</span>: <span class="text-amber-300">3</span>,
+    <span class="text-emerald-400">"name"</span>: <span class="text-emerald-400">"Marketing"</span>,
+    <span class="text-emerald-400">"slug"</span>: <span class="text-emerald-400">"marketing"</span>,
+    <span class="text-emerald-400">"description"</span>: <span class="text-emerald-400">"Marketing and advertising roles"</span>,
+    <span class="text-emerald-400">"jobs_count"</span>: <span class="text-amber-300">0</span>
+  }
+}</code></pre>
+                </div>
+
+                {{-- Update Category --}}
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mt-10 mb-1">Update a Category</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Update an existing category.</p>
+
+                <div class="docs-endpoint">
+                    <div class="docs-endpoint-head">
+                        <span class="docs-method docs-method-patch">PATCH</span>
+                        <code class="text-sm font-semibold text-gray-900 dark:text-gray-100 break-all">{{ url('/api/admin/categories/{id}') }}</code>
+                    </div>
+
+                    <h4 class="docs-h4">Request Body <span class="text-xs font-normal text-gray-500 dark:text-gray-400">(partial update)</span></h4>
+                    <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+                        <table class="docs-table">
+                            <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>name</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Max 255 characters</td></tr>
+                                <tr><td><code>slug</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Unique, max 255 characters</td></tr>
+                                <tr><td><code>description</code></td><td>string</td><td><span class="docs-tag docs-tag-opt">Optional</span></td><td>Max 1000 characters</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="docs-code-label">Example Request</div>
+                    <pre class="docs-code"><code><span class="text-gray-500"># </span>curl -X PATCH {{ url('/api/admin/categories/1') }} \
+  -H <span class="text-emerald-400">"Accept: application/json"</span> \
+  -H <span class="text-emerald-400">"Content-Type: application/json"</span> \
+  -H <span class="text-emerald-400">"Authorization: Bearer ***</span> \
+  -d <span class="text-emerald-400">'{
+    "description": "Updated technology category description"
+  }'</span></code></pre>
+
+                    <div class="docs-code-label">Response <span class="text-gray-500 dark:text-gray-400">— 200 OK</span></div>
+                    <pre class="docs-code"><code>{
+  <span class="text-emerald-400">"message"</span>: <span class="text-emerald-400">"Category updated successfully."</span>,
+  <span class="text-emerald-400">"data"</span>: {
+    <span class="text-emerald-400">"id"</span>: <span class="text-amber-300">1</span>,
+    <span class="text-emerald-400">"name"</span>: <span class="text-emerald-400">"Technology"</span>,
+    <span class="text-emerald-400">"slug"</span>: <span class="text-emerald-400">"technology"</span>,
+    <span class="text-emerald-400">"description"</span>: <span class="text-emerald-400">"Updated technology category description"</span>,
+    <span class="text-emerald-400">"jobs_count"</span>: <span class="text-amber-300">15</span>
+  }
+}</code></pre>
+                </div>
+
+                {{-- Delete Category --}}
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mt-10 mb-1">Delete a Category</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Delete a category. Cannot delete categories that have associated listings.</p>
+
+                <div class="docs-endpoint">
+                    <div class="docs-endpoint-head">
+                        <span class="docs-method docs-method-delete">DELETE</span>
+                        <code class="text-sm font-semibold text-gray-900 dark:text-gray-100 break-all">{{ url('/api/admin/categories/{id}') }}</code>
+                    </div>
+
+                    <div class="docs-code-label">Example Request</div>
+                    <pre class="docs-code"><code><span class="text-gray-500"># </span>curl -X DELETE {{ url('/api/admin/categories/3') }} \
+  -H <span class="text-emerald-400">"Accept: application/json"</span> \
+  -H <span class="text-emerald-400">"Authorization: Bearer ***</span></code></pre>
+
+                    <div class="docs-code-label">Response <span class="text-gray-500 dark:text-gray-400">— 204 No Content</span></div>
+                    <pre class="docs-code"><code><span class="text-gray-500">// Empty body — HTTP 204</span></code></pre>
+
+                    <div class="docs-warn">
+                        <p><strong>Conflict</strong> — returns <code>409 Conflict</code> with <code>{ "message": "Cannot delete category with existing listings." }</code> if the category has jobs.</p>
+                    </div>
                 </div>
             </section>
 
